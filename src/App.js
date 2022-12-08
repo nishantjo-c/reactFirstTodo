@@ -1,23 +1,52 @@
-import logo from './logo.svg';
-import './App.css';
+import Logo from './Logo';
+import Form from './Form';
+import Blogs from './Blogs'
+import {useState, useEffect} from 'react';
+
+let copyData = []
 
 function App() {
+
+    const [title, setTitle] = useState('');
+    const [body, setBody] = useState('');
+    const [arr, setArr] = useState([]);
+
+    const handleChange = (props) =>{
+      setTitle(props.target.value);
+    }
+
+    const handleChangeBody = (props) => {
+      setBody(props.target.value);
+    }
+
+
+    const onSubmit = (props) => {
+      let obj = {}
+      let arr1 = []
+      // console.log(arr);
+
+      obj['title'] = title;
+      obj['body'] = body;
+      obj['id'] = copyData.length + 1;
+
+      // arr1.push(obj)
+      copyData.push(obj);
+      // console.log(copyData);
+      setArr(arr1);
+    }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Logo />
+
+        <div className="inputForm">
+          <Form data={{title, body, handleChange, handleChangeBody, onSubmit}}/>
+        </div>
+
+        <div className="blogList">
+          <Blogs data={copyData}/>
+        </div>
+
     </div>
   );
 }
